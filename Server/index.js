@@ -1,7 +1,7 @@
 //=
 import express from 'express';
 import mongoose from 'mongoose';
-import router from './Routes/auth.js';
+import router from './routes/auth.js';
 
 
 const app = express();
