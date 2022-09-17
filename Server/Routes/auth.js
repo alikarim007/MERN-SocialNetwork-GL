@@ -5,7 +5,7 @@ import "../models/user.js";
 import bcryptjs from "bcryptjs";
 import jwt from 'jsonwebtoken';
 import {SecretValues} from "../keys.js"
-// import { requireLogin } from "../middleware/requireLogin.js";
+import { requireLogin } from "../middleware/requireLogin.js";
 
 const routerAuth = express.Router();
 const User = mongoose.model("User");

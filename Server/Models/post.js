@@ -2,7 +2,7 @@
 import mongoose from "mongoose";
 // import { ObjectId } from "mongoose.Schema.Types";
 const Schema = mongoose.Schema;
-// const ObjectId = mongoose.SchemaTypes.ObjectId;
+const ObjectId = mongoose.SchemaTypes.ObjectId;
 // const ObjectId = mongoose.Schema.Types.ObjectId;
 
 const postSchema = new mongoose.Schema({
@@ -19,9 +19,9 @@ const postSchema = new mongoose.Schema({
         required: true
     },
     postedBy: {
-        // type: ObjectId,
-        type: Schema.Types.ObjectId,
-        ref: "user"  
+        type: ObjectId,
+        // type: Schema.Types.ObjectId,
+        ref: "User"  
     }
 });
 
