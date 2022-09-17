@@ -4,13 +4,14 @@ import mongoose from "mongoose";
 import "../models/user.js";
 import bcryptjs from "bcryptjs";
 import jwt from 'jsonwebtoken';
-import { SecretValues } from "../keys.js";
+import {SecretValues} from "../keys.js"
+// import { requireLogin } from "../middleware/requireLogin.js";
 
-const router = express.Router();
+const routerAuth = express.Router();
 const User = mongoose.model("User");
 
 //SignUp
-router.post("/signup", (req, res) => {
+routerAuth.post("/signup", (req, res) => {
   const { name, email, password } = req.body;
   if (!name || !email || !password) {
     return res.status(422).json({ error: "SignUp:-Please add all details" });
@@ -44,7 +45,7 @@ router.post("/signup", (req, res) => {
 });
 
 //SignIn
-router.post("/signin", (req, res) => {
+routerAuth.post("/signin", (req, res) => {
   const { email, password } = req.body;
   if (!email || !password) {
     return res.status(422).json({ error: "SignIn:- Please add all details" }); //recieving from client - blank details
@@ -60,7 +61,7 @@ router.post("/signin", (req, res) => {
         // res.json({message:"From Server: Successully Signed In"});
         const token = jwt.sign({_id:savedUser._id},SecretValues);
         const {_id,name,email} = savedUser;
-        res.json({token,user:{_id,name,email}}); 
+        res.json({token,user:{_id,name,email}});
         console.log(token);       
       }
       else{
@@ -73,4 +74,4 @@ router.post("/signin", (req, res) => {
   });
 });
 
-export default router;
+export default routerAuth;
