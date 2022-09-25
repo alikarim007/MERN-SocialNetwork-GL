@@ -1,10 +1,10 @@
 //Server/models/post.js
 import mongoose from "mongoose";
-// import { ObjectId } from "mongoose.Schema.Types";
-
-
-// const ObjectId = mongoose.Schema.Types.ObjectId;
- const ObjectId = mongoose.Schema.ObjectId;
+// import { ObjectId } from "Schema.Types";
+// const Schema = mongoose.Schema;
+// const ObjectId = mongoose.SchemaTypes.ObjectId;
+// const ObjectId = Schema.Types;
+const {ObjectId} = mongoose.Schema.Types;
 const postSchema = new mongoose.Schema({
     title: {
         type: String,
@@ -16,12 +16,12 @@ const postSchema = new mongoose.Schema({
     },
     photo: {
         type: String,
-        required: true    
+        required: true
     },
     postedBy: {
         type: ObjectId,
-        ref: "user"  
+        // type: Schema.Types.ObjectId,
+        ref: "User"  
     }
 });
-
 mongoose.model("Post",postSchema);

@@ -1,10 +1,45 @@
-import React, { useState } from 'react';
+//Client/.../screen/CreatPost.js
+import React, { useEffect, useState } from 'react';
+import M from 'materialize-css';
+import {useNavigate } from 'react-router-dom';
 
 function CreatePost() {
     const [title,setTitle] = useState("");
     const [body,setBody] = useState("");
     const [image,setImage] = useState("");
+    const [url,setUrl] = useState("");
+    const navigate = useNavigate();
    
+    useEffect(()=>{
+      if(url){
+        fetch('/createpost',{
+            method:"post",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer "+localStorage.getItem("jwt")
+            },
+            body:JSON.stringify({
+                title:title,
+                body:body,
+                pic:url
+            })
+        }).then(res=>res.json)
+        .then(data=>{ 
+            if(data.error){
+              console.log("data.error:"+data)
+              M.toast({html: "Not Posted", classes:"#b71c1c red darken-4"});
+            }
+            else{
+              console.log("data:"+data)
+              M.toast({html: "Posted", classes:"#43a047 green darken-1"});
+              navigate("/");
+            }
+          }).catch(err=>{
+            console.log(err)
+          })
+   }
+  },[title,body,navigate,url])
+
     const postDetails= ()=>{
         const data = new FormData();
         data.append("file",image);
@@ -12,10 +47,12 @@ function CreatePost() {
         
         fetch("https://api.cloudinary.com/v1_1/instabookcloud/image/upload/",{
         method:"post",
-        body:data })
+        body:data 
+        })
         .then(res=>res.json())
         .then(data=>{
              console.log(data);
+             setUrl(data.url);
         })
         .catch(err=>{
             console.log(data);
@@ -29,8 +66,7 @@ function CreatePost() {
         maxWidth: "500px",
         padding: "20px",
         textAlign: "center"
-    }}
-    >
+    }}>
         <input 
         type="text" 
         placeholder='title'
