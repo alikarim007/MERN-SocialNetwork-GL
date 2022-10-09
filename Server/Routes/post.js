@@ -28,9 +28,10 @@ routerPost.post('/createpost',requireLogin,(req,res)=>{
    })
 })
 
-routerPost.get('/allpost',requireLogin,(req,res)=>{
+routerPost.get("/allpost",requireLogin,(req,res)=>{
    Post.find()
-   .populate("PostedBy","_id name")
+   .populate([{ path: "postedBy", strictPopulate: false }])
+   .populate("postedBy","_id name")
    .then(posts=>{
       res.json({posts})
    })
@@ -41,7 +42,8 @@ routerPost.get('/allpost',requireLogin,(req,res)=>{
 
 routerPost.get('/mypost',requireLogin,(req,res)=>{
    Post.find({postedBy:req.user._id})
-   .populate("PostedBy","_id name")
+   .populate([{ path: "postedBy", strictPopulate: false }])
+   .populate("postedBy","_id name")
    .then(mypost=>{
       res.json({mypost})
    })

@@ -26,7 +26,7 @@ function CreatePost() {
         }).then(res=>res.json)
         .then(data=>{ 
             if(data.error){
-              console.log("data.error:"+data)
+              // console.log("data.error:"+data)
               M.toast({html: "Not Posted", classes:"#b71c1c red darken-4"});
             }
             else{
@@ -51,7 +51,7 @@ function CreatePost() {
         })
         .then(res=>res.json())
         .then(data=>{
-             console.log(data);
+            //  console.log(data);
              setUrl(data.url);
         })
         .catch(err=>{
